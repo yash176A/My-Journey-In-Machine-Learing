@@ -1,0 +1,61 @@
+# Description of the project 
+# synthetic stock market dataset
+#   A binary output variable: e.g., whether the stock will go Up (1) or Down (0)
+#   Use of a classifier (e.g., Logistic Regression)
+#   Cross-validation
+#   Confusion matrix visualization
+
+
+
+# Import libraries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split, cross_val_predict
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+
+# Step 1: Create a synthetic stock market dataset
+np.random.seed(42)
+n_samples = 1000
+
+data = {
+    'Open': np.random.uniform(100, 500, n_samples),
+    'High': np.random.uniform(100, 500, n_samples),
+    'Low': np.random.uniform(100, 500, n_samples),
+    'Volume': np.random.randint(10000, 1000000, n_samples),
+}
+
+# Create a simple target: if Close > Open => Up (1), else Down (0)
+close = data['Open'] + np.random.uniform(-10, 10, n_samples)
+data['Close'] = close
+data['Target'] = (data['Close'] > data['Open']).astype(int)
+
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+print(df)
+
+# Step 2: Define features and target
+X = df[['Open', 'High', 'Low', 'Volume']]
+y = df['Target']
+
+# Step 3: Train/Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Step 4: Logistic Regression with cross-validation
+model = LogisticRegression()
+y_pred = cross_val_predict(model, X_train, y_train, cv=5)
+
+# Step 5: Confusion Matrix
+cm = confusion_matrix(y_train, y_pred)
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=["Down (0)", "Up (1)"])
+
+# Step 6: Plot the confusion matrix
+
+plt.figure(figsize=(6, 5))
+disp.plot(cmap=plt.cm.Blues,values_format='d')
+plt.title("Confusion Matrix (Cross-Validated)")
+plt.show()
