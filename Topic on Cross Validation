@@ -1,0 +1,94 @@
+# This is a general example of hoe to create a random data 
+# what is the importance of noise in the data 
+# how to use cross validation for the created random data 
+# learning the library matplotlib.pyplot
+
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_regression
+
+# Clean data (no noise)
+X_clean, y_clean = make_regression(n_samples=100, n_features=1, noise=0, random_state=42)
+
+# Noisy data
+X_noisy, y_noisy = make_regression(n_samples=100, n_features=1, noise=20, random_state=42)
+
+# Plot both
+plt.figure(figsize=(12, 5))
+
+# Plot clean data
+plt.subplot(1, 2, 1)
+plt.scatter(X_clean, y_clean, color='blue', label='Clean Data')
+plt.title("Linear Data WITHOUT Noise")
+plt.xlabel("Feature X")
+plt.ylabel("Target y")
+plt.legend()
+
+# Plot noisy data
+plt.subplot(1, 2, 2)
+plt.scatter(X_noisy, y_noisy, color='red', label='Noisy Data')
+plt.title("Linear Data WITH Noise")
+plt.xlabel("Feature X")
+plt.ylabel("Target y")
+plt.legend()
+
+plt.tight_layout()
+plt.show()
+
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_regression
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import cross_val_score
+import numpy as np
+
+# Step 1: Create noisy data
+X, y = make_regression(n_samples=100, n_features=1, noise=10, random_state=42)
+
+# Step 2: Define Linear Regression model
+model = LinearRegression()
+
+# Step 3: Apply Cross-Validation (e.g., 5-fold)
+scores = cross_val_score(model, X, y, cv=5, scoring='r2')  # R² score
+
+# Step 4: Print cross-validation scores
+print("Cross-validation R² scores for each fold:", scores)
+print("Average R² score:", np.mean(scores))
+
+# Step 5: Fit and visualize the model (optional after CV)
+model.fit(X, y)
+y_pred = model.predict(X)
+
+plt.figure(figsize=(16, 8))
+plt.scatter(X, y, color='red', label='Noisy Data')
+plt.plot(X, y_pred, color='blue', linewidth=2, label='Regression Line')
+plt.title("Linear Regression on Noisy Data")
+plt.xlabel("Feature X")
+plt.ylabel("Target y")
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+import matplotlib.pyplot as plt
+from sklearn.datasets import make_regression
+from sklearn.linear_model import LinearRegression
+
+# Step 1: Create noisy data
+X, y = make_regression(n_samples=100, n_features=1, noise=10, random_state=42)
+
+# Step 2: Fit Linear Regression model
+model = LinearRegression()
+model.fit(X, y)
+
+# Step 3: Predict using the model
+y_pred = model.predict(X)
+
+# Step 4: Plot the data and regression line
+
+plt.figure(figsize=(16, 8)) # larger, wider plot
+
+plt.scatter(X, y, color='red', label='Noisy Data')
+plt.plot(X, y_pred, color='blue', linewidth=2, label='Regression Line')
+plt.title("Linear Regression on Noisy Data")
+plt.xlabel("Feature X")
+plt.ylabel("Target y")
+plt.legend()
+plt.show()
