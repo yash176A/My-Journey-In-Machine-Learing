@@ -56,3 +56,70 @@ Specificity (TNR)
 Precision
 This is crucial when doing a full performance analysis of a classification model.
 Would you like this summary exported as a PDF or text file for your reference?
+
+
+
+
+
+
+# Small project where we use inbuild data set breast cancer and used ML model (logestic regression) and found out the accuracy , sensitivity, specificity, and displayed the confusion matrix
+
+CODE:
+# Step 1: Import libraries
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import cross_val_predict, StratifiedKFold
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+# Step 2: Load dataset
+data = load_breast_cancer()
+X, y = data.data, data.target  # y = 0 (malignant), 1 (benign)
+
+# Step 3: Create model
+model = LogisticRegression(max_iter=10000)
+
+# Step 4: Cross-validation predictions
+cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+y_pred = cross_val_predict(model, X, y, cv=cv)
+
+# Step 5: Confusion Matrix
+cm = confusion_matrix(y, y_pred)
+tn, fp, fn, tp = cm.ravel()
+
+
+# Step 6: Sensitivity and Specificity
+sensitivity = tp / (tp + fn)
+specificity = tn / (tn + fp)
+
+# Display results
+
+disp=ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=["malignant(0)","benign(1)"])
+disp.plot(cmap=plt.cm.Blues,values_format='d')
+plt.title("Confusion Matrix (Cross-Validated)")
+
+print("Confusion Matrix:\n", cm)
+print(f"Sensitivity (True Positive Rate): {sensitivity:.2f}")
+print(f"Specificity (True Negative Rate): {specificity:.2f}")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
