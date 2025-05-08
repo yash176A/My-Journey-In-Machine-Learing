@@ -1,0 +1,58 @@
+✅ 1. Can we load data from libraries like sklearn.datasets?
+Your Question:
+From sklearn.datasets import load_breast_cancer — is it possible to take data from the libraries?
+Answer:
+ Yes, libraries like sklearn.datasets provide built-in datasets such as load_breast_cancer() for easy access to real-world, preprocessed data. It returns a Bunch object that contains features, targets, feature names, and more.
+
+✅ 2. Why did we use cross_val_predict() instead of another type of cross-validation?
+Your Question:
+Is there a specific reason for using this type of cross-validation, and which type suits which data?
+Answer:
+cross_val_predict() returns predicted labels using cross-validation, which is useful for evaluating a model’s performance on unseen data, like for confusion matrices.
+You’d use it when you want per-sample predictions, not just an average score.
+Other types like KFold, StratifiedKFold, or cross_val_score() are better for scoring or tuning hyperparameters.
+✅ 3. Why not use cross_val_score() instead of cross_val_predict()?
+Your Question:
+Can’t I use cross_val_score instead of cross_val_predict?
+Answer:
+cross_val_score() gives a numeric score (like accuracy) for each fold — it's good for quick evaluation.
+cross_val_predict() returns actual predicted labels — required if you want to build a confusion matrix or calculate sensitivity/specificity.
+Use:
+cross_val_score() for scoring metrics
+cross_val_predict() for diagnostic analysis like confusion matrices
+✅ 4. Why am I getting AttributeError when calling .info() on the dataset?
+Your Question:
+How can I see what type of data is there, and why is .info() not working?
+Answer:
+load_breast_cancer() returns a Bunch, not a DataFrame.
+A Bunch object doesn’t have .info() — it’s a dictionary-like object.
+You need to convert it to a DataFrame:
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df['target'] = data.target
+df.info()
+✅ 5. What does this line do?
+df = pd.DataFrame(data.data, columns=data.feature_names)
+df['target'] = data.target
+Your Question:
+Explain in detail.
+Answer:
+The first line creates a DataFrame from the features.
+The second line adds the target class (0 = malignant, 1 = benign).
+ This combines all data (features + label) into a usable format.
+✅ 6. What does this line mean and why is it important?
+TN, FP, FN, TP = cm.ravel()
+Your Question:
+This is important — explain.
+Answer:
+ This line extracts the 4 values from the confusion matrix:
+TN = True Negative
+FP = False Positive
+FN = False Negative
+TP = True Positive
+These are used to manually compute:
+Accuracy
+Sensitivity (TPR/Recall)
+Specificity (TNR)
+Precision
+This is crucial when doing a full performance analysis of a classification model.
+Would you like this summary exported as a PDF or text file for your reference?
