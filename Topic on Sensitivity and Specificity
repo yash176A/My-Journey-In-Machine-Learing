@@ -108,6 +108,40 @@ print(f"Specificity (True Negative Rate): {specificity:.2f}")
 
 
 
+# ----------------------------------------------------------------------
+# Load and Prepare Breast Cancer Dataset
+#
+# This script loads the breast cancer dataset from sklearn,
+# converts it into a pandas DataFrame for easier data handling,
+# and appends the target variable (diagnosis) to the dataset.
+#
+# It also prints the full DataFrame to inspect the structure,
+# features, and target values. You can uncomment the `.info()` and
+# `.head()` lines for additional insight into data types and top rows.
+# ----------------------------------------------------------------------
+
+
+from sklearn.datasets import load_breast_cancer
+import pandas as pd
+
+# Load data
+data = load_breast_cancer()
+
+# Convert to DataFrame
+df = pd.DataFrame(data.data, columns=data.feature_names)
+
+# Add target column
+df['target'] = data.target
+
+# Now check info
+#print(df.info())
+#print(df.head())
+print(df)
+
+
+
+
+
 
 
 
