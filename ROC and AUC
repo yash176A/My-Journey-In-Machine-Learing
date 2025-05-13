@@ -1,4 +1,4 @@
-Sure, Yashwanth! Here's a clear summary of our entire conversation so far — including your questions and the key points from each of my answers:
+
 ✅ Summary of Questions & Answers
 1. Q: Is ROC only about finding the threshold? Or can we do more with it?
 A: ROC is not just about finding the best threshold. It helps evaluate the overall performance of classification models by plotting sensitivity (True Positive Rate) vs. 1-specificity (False Positive Rate). AUC measures the area under this curve — higher AUC = better model.
