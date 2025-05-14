@@ -1,0 +1,53 @@
+
+ ✅ **Underfitting**:
+
+* **Definition**: The model is too simple to capture the underlying patterns in the data.
+* **Behavior**:
+
+  * Performs poorly on both training and testing data.
+  * **High error (sum of squared errors or SSE) on both training and testing data.**
+* **Bias/Variance**:
+
+  * **High bias**: Model makes strong assumptions and fails to capture complexity.
+  * **Low variance**: Model doesn't change much with different training data.
+
+---
+
+ ✅ **Overfitting**:
+
+* **Definition**: The model is too complex and learns the noise in the training data.
+* **Behavior**:
+
+  * Performs very well on training data (low training SSE).
+  * Performs poorly on testing data (high testing SSE).
+* **Bias/Variance**:
+
+  * **Low bias**: Model fits training data well.
+  * **High variance**: Model is sensitive to small changes in training data.
+
+---
+
+ ✅ **Bias and Variance**:
+
+* **Bias**: Error due to overly simplistic assumptions in the learning algorithm.
+
+  * **Shows up in training error** (and testing too, if underfitting).
+* **Variance**: Error due to the model’s sensitivity to fluctuations in the training data.
+
+  * **Shows up mainly in testing error** (especially in overfitting).
+
+---
+
+🔁 Summary:
+
+| Concept      | Training Error | Testing Error | Bias     | Variance |
+| ------------ | -------------- | ------------- | -------- | -------- |
+| Underfitting | High           | High          | High     | Low      |
+| Overfitting  | Low            | High          | Low      | High     |
+| Good Fit     | Low            | Low           | Balanced | Balanced |
+
+---
+
+
+
+
