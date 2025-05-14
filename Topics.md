@@ -6,5 +6,4 @@
 5. ROC and AUC
 6. Entropy
 7. Mutual Information
-8. Bias and Variance
-9. 
+8. 
