@@ -1,0 +1,74 @@
+
+🔷 What is Entropy?
+Entropy is a measure of impurity or disorder in a dataset.
+In classification, it quantifies how mixed the classes are in a subset.
+Formula:
+Entropy=−∑(pi⋅log⁡2(pi))\text{Entropy} = -\sum (p_i \cdot \log_2(p_i))where pip_i is the probability of class ii.
+
+🔷 Why Do We Calculate Entropy?
+To measure how pure or impure a dataset is.
+It helps in deciding where to split in decision trees using Information Gain.
+Lower entropy = purer = better split.
+
+🔷 High vs. Low Entropy
+EntropyPurityMeaning
+High (near 1)	Impure	Mixed class labels	
+Low (near 0)	Pure	Mostly one class (good for learning)	
+
+🔷 What Does "Impure" Mean?
+A dataset is impure if it contains a mix of different classes.
+Pure means almost all samples belong to one class.
+
+🔷 Using Entropy in Decision Trees
+clf = DecisionTreeClassifier(criterion='entropy', random_state=42)
+criterion='entropy': uses Information Gain to split nodes.
+random_state=42: ensures reproducibility of results.
+Builds a tree that splits the dataset to reduce entropy at each level.
+
+🔷 Example Using Entropy (Iris Dataset)
+Loaded Iris dataset.
+Split data into training and test.
+Trained DecisionTreeClassifier using entropy.
+Evaluated accuracy.
+Visualized the tree showing how splits were made.
+
+🔷 Extra Topics Covered
+Difference between 'entropy' and 'gini':
+Both are used to measure impurity.
+'entropy': based on information theory (log).
+'gini': simpler, often faster, but similar performance.
+Listing sklearn submodules using pkgutil (not just internal ones).
+Let me know if you’d like this exported as a PDF or want a quick cheat sheet for entropy + decision trees!
+
+
+CODE:
+
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
+# Load example dataset (Iris)
+iris = load_iris()
+X = iris.data
+y = iris.target
+
+# Split into train/test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create Decision Tree with entropy
+clf = DecisionTreeClassifier(criterion='entropy', random_state=42)
+clf.fit(X_train, y_train)
+
+# Predict and evaluate
+y_pred = clf.predict(X_test)
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.2f}")
+
+
+
+
+
+
+
+
+
