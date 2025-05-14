@@ -4,3 +4,7 @@
 3. Topic on Sensitivity and Specificity
 4. Bias and Variance
 5. ROC and AUC
+6. Entropy
+7. Mutual Information
+8. Bias and Variance
+9. 
