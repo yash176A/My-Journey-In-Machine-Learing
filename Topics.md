@@ -6,4 +6,5 @@
 5. ROC and AUC
 6. Entropy
 7. Mutual Information
-8. 
+8. Linear Regression
+9. 
