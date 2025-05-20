@@ -1,0 +1,135 @@
+1. What is Linear Regression?**
+Linear regression is a statistical method used to model the relationship between a dependent variable **Y** and an independent variable **X**. It finds the best-fit line that minimizes the error between predicted and actual values.
+
+2. What is the Equation of a Linear Regression Model?**
+The equation of a simple linear regression model is:
+\[
+Y = mX + b
+\]
+where:
+- **Y** = Dependent variable (predicted value)
+- **X** = Independent variable (input feature)
+- **m** = Slope of the regression line (how much Y changes per unit increase in X)
+- **b** = Intercept (where the line crosses the Y-axis)
+3. How Do We Find the Best-Fit Line?**
+The best-fit line minimizes the total error (difference between actual and predicted values). This is done using the **Sum of Squares** method.
+
+4. What is the Sum of Squares Formula?**
+To find the best-fit line, we minimize the **Residual Sum of Squares (RSS)**:
+
+\[
+RSS = \sum (Y_i - \hat{Y}_i)^2
+\]
+
+where:
+- **Y_i** = Actual values
+- **\hat{Y}_i** = Predicted values from the regression model
+- The lower the RSS, the better the model.
+
+5. How Do We Compute `m` and `b` Using Least Squares?**
+The optimal values of **m** and **b** are computed using:
+
+\[
+m = \frac{\sum (X_i - \bar{X})(Y_i - \bar{Y})}{\sum (X_i - \bar{X})^2}
+\]
+
+\[
+b = \bar{Y} - m \bar{X}
+\]
+
+where:
+- **\bar{X}, \bar{Y}** = Mean of X and Y values
+- **m** is calculated using the correlation between X and Y
+- **b** is derived from the regression equation.
+
+6. How Can You Implement This in Python?**
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Sample Data
+X = np.array([1, 2, 3, 4, 5])
+Y = np.array([2, 4, 5, 4, 5])
+
+# Compute Mean of X and Y
+X_mean = np.mean(X)
+Y_mean = np.mean(Y)
+
+# Compute m and b
+m = sum((X - X_mean) * (Y - Y_mean)) / sum((X - X_mean)**2)
+b = Y_mean - m * X_mean
+
+# Predict Y values
+Y_pred = m * X + b
+
+# Plot Data and Best-Fit Line
+plt.scatter(X, Y, label="Data Points")
+plt.plot(X, Y_pred, color='red', label="Best-Fit Line")
+plt.legend()
+plt.show()
+
+print(f"Equation of Best-Fit Line: Y = {m:.2f}X + {b:.2f}")
+```
+
+7. How Do We Evaluate the Model?**
+To measure the goodness of fit, we use:
+- **R-squared (`R²`)**: Measures how well the regression line explains the variation in the data.
+- **Mean Squared Error (MSE)**: Measures average squared error.
+
+
+
+
+CODE
+from sklearn.datasets import fetch_california_housing
+import pandas as pd
+
+california = fetch_california_housing()
+data = pd.DataFrame(california.data, columns=california.feature_names)
+data['MEDV'] = california.target
+
+
+data
+
+
+data.isnull().sum()
+
+from sklearn.model_selection import train_test_split
+
+X = data.drop('MEDV', axis=1)
+y = data['MEDV']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression()
+
+model.fit(X_train, y_train)
+
+predictions = model.predict(X_test)
+
+
+len(y_test)
+len(predictions)
+
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+mae = mean_absolute_error(y_test, predictions)
+mse = mean_squared_error(y_test, predictions)
+r2 = r2_score(y_test, predictions)
+
+print(f'Mean Absolute Error: {mae}')
+print(f'Mean Squared Error: {mse}')
+print(f'R^2 Score: {r2}')
+
+ #parameters
+model = LinearRegression(
+     fit_intercept=True,   # Include intercept in the model
+     copy_X=True,          # Make a copy of the input features
+     n_jobs=-1             # Use all available CPU cores for computation
+ )
+
+
+
+
