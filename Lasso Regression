@@ -1,0 +1,116 @@
+
+
+1. What is Lasso Regression?**
+Lasso (Least Absolute Shrinkage and Selection Operator) regression is a type of **linear regression** that includes **L1 regularization**, meaning it **shrinks** some coefficients to **zero**, effectively performing **feature selection**.
+
+2. Why do we use Lasso Regression?**
+Lasso is useful when:
+- We want a **simpler model** by removing less important features.
+- Some features are highly correlated, and we need to reduce **multicollinearity**.
+- We need to **avoid overfitting** by penalizing large coefficients.
+
+3. How does Lasso Regression work?**
+Lasso regression minimizes the following objective function:
+
+\[
+\text{Loss} = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \alpha \sum_{j=1}^{p} |w_j|
+\]
+
+Where:
+- \( (y_i - \hat{y}_i)^2 \) is the squared error (same as ordinary least squares).
+- \( \sum_{j=1}^{p} |w_j| \) is the **L1 penalty**, which shrinks coefficients.
+- \( \alpha \) controls how much regularization is applied.
+
+4. How is Lasso different from Ridge Regression?**
+The key difference is:
+- **Ridge Regression** uses **L2 regularization** \( \sum w_j^2 \) → shrinks coefficients **gradually** but does not force them to zero.
+- **Lasso Regression** uses **L1 regularization** \( \sum |w_j| \) → forces some coefficients **to zero**, performing **automatic feature selection**.
+
+5. When should I use Lasso instead of Ridge?**
+- If you want **feature selection**, use **Lasso**.
+- If you want to **shrink coefficients without eliminating features**, use **Ridge**.
+- If you’re unsure, **Elastic Net** combines both L1 and L2 penalties.
+
+### **6. How do I implement Lasso Regression in Python?**
+Here’s a simple example using `scikit-learn`:
+
+```python
+from sklearn.linear_model import Lasso
+from sklearn.model_selection import train_test_split
+
+# Sample data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and fit Lasso model
+lasso_model = Lasso(alpha=0.1)  # Alpha controls regularization strength
+lasso_model.fit(X_train, y_train)
+
+# Get coefficients
+print("Lasso Coefficients:", lasso_model.coef_)
+```
+This will shrink some coefficients to zero depending on the value of `alpha`.
+
+---
+
+7. What happens if alpha is too large or too small?**
+- If **alpha is too large**, all coefficients shrink too much → model underfits.
+- If **alpha is too small**, regularization is weak → model may overfit.
+- Choosing **alpha** wisely (using **cross-validation**) is key!
+
+8. What are some challenges with Lasso Regression?**
+- If features are **highly correlated**, Lasso may randomly keep one and discard others.
+- Choosing the right **alpha** is crucial for good performance.
+- Lasso may behave inconsistently if there’s not enough data.
+
+
+#### CODE
+import pandas as pd
+import numpy as np
+from sklearn.datasets import load_diabetes
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import Lasso,LinearRegression
+from sklearn.metrics import r2_score,mean_squared_error
+
+diabetes= load_diabetes()
+diabetes
+data=pd.DataFrame(diabetes.data,columns=diabetes.feature_names)
+data['target']=diabetes.target
+data.head()
+
+x=data.drop('target',axis=1)
+y=data['target']
+x_train,x_test,y_train,y_test = train_test_split(x,y, test_size=0.2, random_state=42)
+
+lr=LinearRegression()
+lr.fit(x_train,y_train)
+y_predict=lr.predict(x_test)
+
+mse=mean_squared_error(y_test,y_predict)
+print(f'mean square error:{mse}')
+r2=r2_score(y_test,y_predict)
+print(f'r2 score:{r2}')
+
+coef=pd.Series(lr.coef_,index=x.columns)
+print(coef)
+
+from sklearn.linear_model import Lasso
+
+# Create and fit the model for Lasso Regression
+lasso_model = Lasso(alpha=0.1)
+lasso_model.fit(x_train, y_train)
+y_predict=lasso_model.predict(x_test)
+
+### Mean Square Error 
+### R2 Score
+
+#coefficents
+coef=pd.Series(lasso_model.coef_,index=x.columns)
+print(coef)
+
+
+
+
+
+
+
+
