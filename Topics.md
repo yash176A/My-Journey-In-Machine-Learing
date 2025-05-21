@@ -7,4 +7,6 @@
 6. Entropy
 7. Mutual Information
 8. Linear Regression
-9. 
+9. Lasso
+10. Ridge and ElasticNet
+11. 
