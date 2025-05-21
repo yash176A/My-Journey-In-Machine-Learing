@@ -1,0 +1,148 @@
+1. What is Ridge Regression?**  
+**Ridge Regression** is a type of **linear regression** that adds a **penalty term (L2 regularization)** to the model, which helps prevent **overfitting** by shrinking the regression coefficients.
+
+2. Why do we need Ridge Regression?**  
+If you’re dealing with **multicollinearity** (high correlation between features), standard **linear regression** can give unstable estimates. Ridge helps by **reducing the effect of highly correlated features**, making the model more robust.
+
+3. How does Ridge Regression work?**  
+It minimizes the following **loss function**:
+
+\[
+\text{Loss} = \sum (y_i - \hat{y}_i)^2 + \lambda \sum \beta_j^2
+\]
+
+- The **first term** is the standard mean squared error (MSE).
+- The **second term** is an **L2 penalty**, which shrinks large coefficients.
+- **λ (lambda)** controls the strength of regularization:
+  - If **λ = 0**, Ridge becomes **ordinary linear regression**.
+  - If **λ is large**, coefficients shrink more aggressively.
+
+4. What are the benefits of Ridge Regression?**  
+✔ **Prevents overfitting** when features are highly correlated.  
+✔ **Improves stability** of model predictions.  
+✔ **Works well with continuous features** having small variance.  
+✔ **Maintains all features** (unlike Lasso, which eliminates some).
+
+5. When should we NOT use Ridge Regression?**  
+❌ When you **need feature selection** (Ridge doesn’t eliminate coefficients; it only reduces them).  
+❌ When **some features are truly irrelevant**—Lasso is better for this.  
+❌ If you have a **small dataset**, simple linear regression might work fine without regularization.
+
+6. What kind of data requires Lasso instead of Ridge?**  
+🔹 **Lasso Regression (L1 regularization)** is better when you expect that **some features are irrelevant** and should be removed.  
+🔹 Lasso minimizes:
+
+\[
+\text{Loss} = \sum (y_i - \hat{y}_i)^2 + \lambda \sum |\beta_j|
+\]
+
+🔹 Since it uses an **absolute penalty**, it **shrinks some coefficients to zero**, effectively performing **feature selection**.
+
+7. When should we use Ridge instead of Lasso?**  
+**Use Ridge when:**
+- You have **many correlated features** that should not be eliminated.
+- You need **stable predictions** without discarding variables.
+- You want **smooth coefficient shrinkage**, not harsh elimination.
+
+Use Lasso when:
+- You suspect **some features are irrelevant** and want automatic selection.
+- You need a **sparse model** for better interpretability.
+
+Final Takeaway**  
+**Ridge vs. Lasso comes down to feature selection!**  
+- **Ridge keeps all features but shrinks them.**
+- **Lasso eliminates weak features by setting coefficients to zero.**  
+If you're analyzing **high-dimensional data**, **Elastic Net (a mix of Ridge and Lasso)** can also be useful.
+
+
+ElasticNet Regresssion
+
+
+1. What is Elastic Net?**  
+Elastic Net is a type of regression that applies both **L1 (Lasso) and L2 (Ridge) penalties** to prevent **overfitting** and **select important features**.
+
+Its loss function is:
+
+\[
+\text{Loss} = \sum (y_i - \hat{y}_i)^2 + \lambda_1 \sum |\beta_j| + \lambda_2 \sum \beta_j^2
+\]
+
+where:
+- **L1 (Lasso) term**: Helps **eliminate** irrelevant features by setting some coefficients to **zero**.
+- **L2 (Ridge) term**: Shrinks all coefficients to **prevent overfitting**.
+
+2. Why use Elastic Net instead of Ridge or Lasso?**  
+✔ **Better for high-dimensional data** (many features).  
+✔ **Solves Lasso's limitation** when features are highly correlated.  
+✔ **Provides feature selection like Lasso**, but **doesn't force extreme coefficient shrinkage**.  
+✔ **Balances Ridge and Lasso**, making it more adaptable.
+
+3. When should you NOT use Elastic Net?**  
+❌ If you have **very few features**, simpler models (like Ridge or Linear Regression) might work fine.  
+❌ If feature selection isn’t necessary—Ridge alone would be better.  
+❌ If interpretability is key—Elastic Net has two parameters (λ₁ and λ₂), adding complexity.
+
+4. When do we use Ridge, Lasso, or Elastic Net?**  
+| **Situation** | **Best Choice** |
+|-------------|--------------|
+| Features **not correlated**, some are irrelevant | **Lasso** (L1) |
+| Features **correlated**, none should be removed | **Ridge** (L2) |
+| Features **correlated but need selection** | **Elastic Net** (L1 + L2) |
+
+Final Thoughts 
+Elastic Net is perfect when you have **many correlated features**, but still want **some feature selection**. It prevents **Lasso's over-aggressive feature removal** while keeping **Ridge's stability**.
+
+
+### CODE
+
+import numpy as mp
+import pandas as pd
+from sklearn.datasets import fetch_california_housing
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression,Ridge,ElasticNet
+from sklearn.metrics import mean_squared_error,r2_score
+
+california=fetch_california_housing()
+data=pd.DataFrame(california.data, columns=california.feature_names)
+data['MedHouseVal']=california.target
+
+data.head()
+
+x=data.drop('MedHouseVal',axis=1)
+y=data['MedHouseVal']
+x_train,x_test,y_train,y_test = train_test_split(x,y, test_size=0.2, random_state=42)
+
+
+## Ridge Regerssion
+from sklearn.linear_model import Ridge
+
+# Create and fit the model
+Ridge_model = Ridge(alpha=0.1)
+Ridge_model.fit(x_train, y_train)
+y_predict=Ridge_model.predict(x_test)
+
+### Mean Square Error 
+### R2 Score
+
+#coefficents
+coef=pd.Series(Ridge_model.coef_,index=x.columns)
+print(coef)
+
+### ELasticNet Regression 
+
+from sklearn.linear_model import ElasticNet
+
+# Create and fit the model
+ElasticNet_model = ElasticNet(alpha=0.1)
+ElasticNet_model.fit(x_train, y_train)
+y_predict=ElasticNet_model.predict(x_test)
+
+### Mean Square Error 
+### R2 Score
+
+#coefficents
+coef=pd.Series(ElasticNet_model.coef_,index=x.columns)
+print(coef)
+
+
+
