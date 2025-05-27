@@ -9,4 +9,6 @@
 8. Linear Regression
 9. Lasso
 10. Ridge and ElasticNet
-11. 
+11. Principle Component Analysis
+12. Multi Dimensional Analysis and PCoA
+13. 
