@@ -1,0 +1,77 @@
+
+Multidimensional Scaling (MDS)
+What is MDS?
+
+* **MDS** is a technique used to visualize the similarity or dissimilarity between data points in a **low-dimensional space** (usually 2D or 3D).
+* It takes a matrix of **pairwise distances or dissimilarities** between points and tries to place each point in a low-dimensional space such that the distances between points are preserved as closely as possible.
+* Essentially, MDS finds a configuration of points that best reflects the original distances.
+
+---
+
+How MDS works (at a high level):
+
+1. You start with a **distance (or dissimilarity) matrix** — this could be Euclidean distances, cosine distances, or any metric representing how different your data points are.
+2. MDS tries to position points in a lower-dimensional space (2D or 3D) so that the **distance between points in this space matches the original distance matrix as closely as possible**.
+3. The result is coordinates for each point in the lower-dimensional space, which you can plot to visualize relationships.
+
+---
+
+Types of MDS:
+
+* **Classical MDS:** Also called Principal Coordinates Analysis. Uses eigendecomposition on a matrix derived from distances.
+* **Non-metric MDS:** Focuses on preserving the **rank order** of the distances rather than exact distances — useful for ordinal data or when only similarity order is meaningful.
+
+---
+
+When to use MDS?
+
+* When you have **pairwise distance/similarity data** (e.g., from surveys, genetic distances, or any metric).
+* When your data might **not be directly in a Euclidean space** or when you want to visualize complex relationships based on any dissimilarity metric.
+* When you want a **visual representation of distances** rather than components explaining variance.
+
+---
+
+Principal Component Analysis (PCA)
+
+What is PCA?
+
+* **PCA** is a **linear dimensionality reduction** technique.
+* It finds new orthogonal axes (principal components) that **maximize variance** in the original data.
+* The first principal component explains the most variance, the second the next most (orthogonal to the first), and so on.
+* PCA transforms original features into a smaller set of uncorrelated variables while retaining as much information (variance) as possible.
+
+How PCA works (at a high level):
+
+1. Start with original data in a high-dimensional space.
+2. Compute the **covariance matrix** of the data.
+3. Find **eigenvectors and eigenvalues** of the covariance matrix.
+4. The eigenvectors are directions of maximum variance (principal components).
+5. Project original data onto the top principal components to reduce dimensionality.
+ When to use PCA?
+
+* When you have **high-dimensional numeric data**.
+* When you want to **reduce features** while keeping most of the variance.
+* When your goal is **feature extraction or data compression**.
+* When you assume linear relationships in data.
+
+Key Differences Between PCA and MDS
+
+| Aspect               | PCA                                               | MDS                                                            |
+| -------------------- | ------------------------------------------------- | -------------------------------------------------------------- |
+| **Input Data**       | Raw data matrix (features × samples)              | Distance/dissimilarity matrix between points                   |
+| **Goal**             | Find orthogonal directions maximizing variance    | Preserve pairwise distances in lower dimension                 |
+| **Data Type**        | Numeric data with meaningful features             | Any kind of distance or dissimilarity measure                  |
+| **Output**           | Principal components (new axes)                   | Coordinates in low-dimensional space                           |
+| **Linear/Nonlinear** | Linear projection                                 | Can handle nonlinear relationships (especially non-metric MDS) |
+| **Interpretation**   | Components show directions of maximum variance    | Visualization preserving distances                             |
+| **Assumptions**      | Data lie in Euclidean space with linear structure | Distance matrix is meaningful and symmetric                    |
+| **When to use**      | Dimensionality reduction, feature extraction      | Visualizing complex distance relationships                     |
+
+---
+
+Summary in Simple Terms:
+
+* **PCA** compresses your original data into fewer dimensions by keeping the directions that have the most variance (spread).
+* **MDS** tries to place your points on a 2D or 3D map so that the distances between points are as close as possible to their original distances.
+
+
